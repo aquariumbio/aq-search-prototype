@@ -1,3 +1,3 @@
-FROM jupyter/scipy-notebook as notebook-base
+FROM jupyter/scipy-notebook:latest as notebook-base
 
-RUN pip install pydent
+RUN python3 -m pip install PyMySQL

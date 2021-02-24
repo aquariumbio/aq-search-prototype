@@ -1,8 +1,29 @@
 version: '3'
-services: 
-  notebook: 
+services:
+  notebook:
     build: .
     volumes:
       - ./work:/home/jovyan/work
-    ports: 
+    ports:
       - 8888:8888
+    depends_on:
+      - mysql_db
+    networks:
+      - app-tier
+
+  mysql_db:
+    image: mysql:5.7
+    environment:   # Set up mysql database name and password
+      MYSQL_DATABASE: production
+      MYSQL_USER: aquarium
+      MYSQL_PASSWORD: aSecretAquarium
+      MYSQL_ROOT_PASSWORD: aSecretAquarium
+    volumes:
+      - ./data/db:/var/lib/mysql
+      - ./data/mysql_init/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
