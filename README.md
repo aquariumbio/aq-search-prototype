@@ -1,23 +1,20 @@
-# pydent-jupyter
-Assorted Jupyter notebooks for tasks using pydent 
+# aq-search-prototype
+Python-based prototype for Aquarium search
 
 ## Requirements
-
-* [Trident](https://github.com/klavinslab/trident)
-* An Aquarium login
 
 This library is designed to be run in Docker
 * Install [Docker](https://www.docker.com/get-started)
 
-Running in Docker eliminates the need to install Trident or manage your Python version. 
+Running in Docker eliminates the need to install Trident or manage your Python version.
 
 ## Setup
 ### 1. Clone
 [git](https://git-scm.com/) with the command
 
 ```bash
-git clone git@github.com:dvnstrcklnd/pydent-scripts.git
-cd pydent-scripts
+git clone git@github.com:aquariumbio/aq-search-prototype.git
+cd aq-search-prototype
 ```
 
 ### 2. Add credentials
