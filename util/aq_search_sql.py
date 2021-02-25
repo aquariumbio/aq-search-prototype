@@ -20,7 +20,7 @@ def search(terms, offset=0, limit=20, method='or'):
         results = results[offset:limit]
         return display_list(results, len(results), highlight=terms)
     else:
-        return "## No Results"
+        return "<h2>No Results</h2>"
 
 def order(results, method, n_terms=None):
     cnt = Counter([r["id"] for r in results]).items()
@@ -73,7 +73,7 @@ def display_list(results, total, highlight=None):
         these_props = [p for p in all_props if p["parent_id"] == result["id"]]
         text.append(display_entry(result, these_props))
 
-    fulltext = "## Showing {} (of {}) Results".format(len(results), total)
+    fulltext = "<h2>Showing {} (of {}) Results</h2>".format(len(results), total)
     fulltext += hrule() + hrule().join(text)
     fulltext = re.subn(regexp_from(highlight), highlight_match, fulltext)
     return fulltext[0]
@@ -109,13 +109,10 @@ def display_entry(sample, properties):
 def display_property(name, value, user_defined=False):
     name = bold(name)
     if user_defined: name = color(name)
-    return "{}: {}\n\n".format(name, value)
+    return "<p>{}: {}</p>".format(name, value)
 
 def regexp_from(terms, oper='|'):
     return re.compile(oper.join(terms), flags=re.IGNORECASE)
-
-def printmd(string):
-    display(Markdown(string))
 
 def highlight_match(matchobj):
     return highlight(matchobj.group(0))
@@ -130,7 +127,7 @@ def color(txt):
     return "<span style=\"color:green;\">{}</span>".format(txt)
 
 def bold(txt):
-    return "**{}**".format(txt)
+    return "<b>{}</b>".format(txt)
 
 def hrule():
-    return "\n\n" + "_"*5 + "\n\n"
+    return "<hr>"
