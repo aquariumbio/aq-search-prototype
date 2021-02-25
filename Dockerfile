@@ -1,3 +1,4 @@
 FROM jupyter/scipy-notebook:latest as notebook-base
 
-RUN python3 -m pip install PyMySQL
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
