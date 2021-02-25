@@ -1,7 +1,6 @@
 import re
 from collections import Counter
 import pymysql
-from IPython.display import Markdown, display
 
 
 def get_connection():
@@ -12,16 +11,16 @@ def get_connection():
         database='production',
         cursorclass=pymysql.cursors.DictCursor
     )
-    
+
 def search(terms, offset=0, limit=20, method='or'):
     terms = split(terms)
     results = search_sequential(terms)
     results = order(results, method, n_terms=len(terms))
     if results:
         results = results[offset:limit]
-        display_list(results, len(results), highlight=terms)
+        return display_list(results, len(results), highlight=terms)
     else:
-        printmd("## No Results")
+        return "## No Results"
 
 def order(results, method, n_terms=None):
     cnt = Counter([r["id"] for r in results]).items()
@@ -57,27 +56,27 @@ def select_samples(connection, term):
           "samples.name, samples.description, " \
           "field_values.name, field_values.value" \
           ") REGEXP '{}'".format(term)
-        
+
     with connection.cursor() as cursor:
         cursor.execute(sql)
-    
+
     print(sql + "\n")
     return cursor.fetchall()
-    
+
 def display_list(results, total, highlight=None):
     connection = get_connection()
     with connection:
         all_props = all_sample_properties(connection, [str(r["id"]) for r in results])
     text = []
-    
+
     for result in results:
         these_props = [p for p in all_props if p["parent_id"] == result["id"]]
         text.append(display_entry(result, these_props))
-        
-    fulltext = "## Showing {} (of {}) Results".format(len(results), total) 
+
+    fulltext = "## Showing {} (of {}) Results".format(len(results), total)
     fulltext += hrule() + hrule().join(text)
     fulltext = re.subn(regexp_from(highlight), highlight_match, fulltext)
-    printmd(fulltext[0])
+    return fulltext[0]
 
 def all_sample_properties(connection, sample_ids):
     with connection.cursor() as cursor:
@@ -114,10 +113,10 @@ def display_property(name, value, user_defined=False):
 
 def regexp_from(terms, oper='|'):
     return re.compile(oper.join(terms), flags=re.IGNORECASE)
-    
+
 def printmd(string):
     display(Markdown(string))
-    
+
 def highlight_match(matchobj):
     return highlight(matchobj.group(0))
 
