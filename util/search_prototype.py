@@ -1,4 +1,4 @@
-from util.search import split, search_sequential, all_sample_properties
+from util.search import split, search_sequential, all_sample_properties, all_samples, count_samples
 from util.display import display_list, display_no_results, order
 
 def search(terms, offset=0, limit=20, method='or'):
@@ -12,5 +12,11 @@ def search(terms, offset=0, limit=20, method='or'):
         return display_list(samples, properties, n_total, highlight=terms)
     else:
         return display_no_results()
+
+def list_samples(offset=0, limit=20):
+    samples = all_samples(offset=offset, limit=limit)
+    n_total = count_samples()
+    properties = all_sample_properties([str(s["id"]) for s in samples])
+    return display_list(samples, properties, n_total)
 
 

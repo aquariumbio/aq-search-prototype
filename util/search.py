@@ -9,6 +9,32 @@ def search_sequential(terms):
             results += select_samples(connection, term)
     return results
 
+def all_samples(offset=0, limit=20):
+    sql = "SELECT samples.*, sample_types.name, users.name " \
+          "FROM samples " \
+          "JOIN sample_types " \
+          "ON sample_types.id = samples.sample_type_id " \
+          "JOIN users " \
+          "ON users.id = samples.user_id " \
+          "ORDER BY samples.id LIMIT {}, {}".format(offset, limit)
+
+    connection = get_connection()
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
+
+    print(sql + "\n")
+    return cursor.fetchall()
+
+def count_samples():
+    sql = "SELECT COUNT(*) FROM samples"
+
+    connection = get_connection()
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
+
+    print(sql + "\n")
+    return cursor.fetchone()['COUNT(*)']
+
 def select_samples(connection, term):
     sql = "SELECT DISTINCT samples.*, sample_types.name, users.name " \
           "FROM samples " \
@@ -32,14 +58,17 @@ def select_samples(connection, term):
     return cursor.fetchall()
 
 def all_sample_properties(sample_ids):
+    sql = "SELECT * FROM field_values " \
+          "WHERE parent_class = 'Sample' " \
+          "AND parent_id IN ({})".format(",".join(sample_ids))
+
     connection = get_connection()
     with connection:
         with connection.cursor() as cursor:
-            sql = "SELECT * FROM field_values " \
-                "WHERE parent_class = 'Sample' " \
-                "AND parent_id IN ({})".format(",".join(sample_ids))
             cursor.execute(sql)
-        return cursor.fetchall()
+
+    print(sql + "\n")
+    return cursor.fetchall()
 
 def split(terms, sep=" "):
     return terms.split(sep)

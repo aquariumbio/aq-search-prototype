@@ -9,8 +9,11 @@ def display_list(samples, properties, n_total, highlight=None):
 
     fulltext = "<h2>Showing {} (of {}) Results</h2>".format(len(samples), n_total)
     fulltext += hrule() + hrule().join(text)
-    fulltext = re.subn(regexp_from(highlight), highlight_match, fulltext)
-    return fulltext[0]
+    if highlight:
+        fulltext = re.subn(regexp_from(highlight), highlight_match, fulltext)
+        return fulltext[0]
+    else:
+        return fulltext
 
 def display_entry(sample, properties):
     disp = display_property(sample["id"], sample["name"])
