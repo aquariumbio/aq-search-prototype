@@ -1,43 +1,44 @@
-# aq-search-prototype
-Python-based prototype for Aquarium search
+# Aquarium Sample Search Prototype
+Flask-based prototype for Aquarium search
 
 ## Requirements
 
 This library is designed to be run in Docker
 * Install [Docker](https://www.docker.com/get-started)
 
-Running in Docker eliminates the need to install Trident or manage your Python version.
-
 ## Setup
 ### 1. Clone
-[git](https://git-scm.com/) with the command
+Clone using [git](https://git-scm.com/) with the command
 
 ```bash
 git clone git@github.com:aquariumbio/aq-search-prototype.git
 cd aq-search-prototype
 ```
 
-### 2. Add credentials
-In order to add credentials for your Aquarium instance(s), `cp util/secrets_template.json util/secrets.json`, and add your login and url information to the new file. You can have more than two instances, and the keys (e.g., `laptop` and `production`) can be changed to whatever you want them to be.
+### 2. Change the Database
+Aquarium database files are stored in data/db, which allows the database to persist between runs. If this directory is empty, such as the first time this app is run, the database is initialized from the database dump `data/mysql_init/dump.sql`. If the dump file does not already exist, then run
 
-```json
-{
-  "laptop": {
-    "login": "neptune",
-    "password": "aquarium",
-    "aquarium_url": "http://localhost/"
-  },
-  "production": {
-    "login": "your_production_username",
-    "password": "your_production_password",
-    "aquarium_url": "production_production_url"
-  }
-}
+```bash
+mv data/mysql_init/default.sql data/mysql_init/dump.sql
 ```
 
-### 3. Start Docker
+You can use a different database dump by renaming it to this file with
+
+```bash
+mv data/mysql_init/dump.sql data/mysql_init/dump-backup.sql
+mv my_dump.sql data/mysql_init/dump.sql
+```
+then removing the contents of the data/db directory
+
+```bash
+rm -rf data/db/*
+```
+
+### 3. Start with Docker Compose
 ```bash
 docker-compose build # if running for the first time
 docker-compose up
 ```
-Then paste the provided url into a browser and navigate to the `work` directory.
+
+### 4. Open in a browser
+Point a browser to `http://0.0.0.0:5000/`. You should see a page titled **Search Samples**.

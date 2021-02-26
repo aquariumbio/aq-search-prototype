@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% if debug %}
+    {{ debug }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div>
+      {% include "select_method.html" %}
+      {% include "select_fields.html" %}
+    </div>
+    <div>
+      <div>
+        <input name="terms" id="terms" value="{{ request.form['terms'] }}">
+        <input type="submit" value="Search">
+      </div>
+    </div>
+  </form>
+  <div class="list">{{ results|safe }}</div>
+{% endblock %}
