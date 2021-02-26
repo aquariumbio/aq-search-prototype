@@ -9,38 +9,14 @@
 {% block content %}
   <form method="post">
     <div>
-      {% if request.form['method'] == 'and' %}
-        <input type="radio" id="and" name="method" value="and" checked>
-      {% else %}
-        <input type="radio" id="and" name="method" value="and">
-      {% endif %}
-      <label for="and">AND</label>
+      {% include "select_method.html" %}
+      {% include "select_fields.html" %}
     </div>
     <div>
-      {% if request.form['method'] == 'or' %}
-        <input type="radio" id="or" name="method" value="or" checked>
-      {% else %}
-        <input type="radio" id="or" name="method" value="or">
-      {% endif %}
-      <label for="or">OR</label>
-    </div>
-
-    <div>
-      <input type="checkbox" id="properties" name="fields" value="properties">
-      <label for="properties">Properties</label>
-    </div>
-    <div>
-      <input type="checkbox" id="owner" name="fields" value="owner">
-      <label for="owner">Owner</label>
-    </div>
-    <div>
-      <input type="checkbox" id="sample_type" name="fields" value="sample_type">
-      <label for="sample_type">Sample Type</label>
-    </div>
-
-    <div>
-      <input name="terms" id="terms" value="{{ request.form['terms'] }}">
-      <input type="submit" value="Search">
+      <div>
+        <input name="terms" id="terms" value="{{ request.form['terms'] }}">
+        <input type="submit" value="Search">
+      </div>
     </div>
   </form>
   <div class="list">{{ results|safe }}</div>

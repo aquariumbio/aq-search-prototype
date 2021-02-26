@@ -1,0 +1,24 @@
+<div>
+    {% if 'properties' in request.form.getlist('fields') %}
+        <input type="checkbox" id="properties" name="fields" value="properties" checked>
+    {% else %}
+        <input type="checkbox" id="properties" name="fields" value="properties">
+    {% endif %}
+    <label for="properties">Properties</label>
+</div>
+<div>
+    {% if 'owner' in request.form.getlist('fields') %}
+        <input type="checkbox" id="owner" name="fields" value="owner" checked>
+    {% else %}
+        <input type="checkbox" id="owner" name="fields" value="owner">
+    {% endif %}
+    <label for="owner">Owner</label>
+</div>
+<div>
+    {% if 'sample_type' in request.form.getlist('fields') %}
+        <input type="checkbox" id="sample_type" name="fields" value="sample_type" checked>
+    {% else %}
+        <input type="checkbox" id="sample_type" name="fields" value="sample_type">
+    {% endif %}
+    <label for="sample_type">Sample Type</label>
+</div>
