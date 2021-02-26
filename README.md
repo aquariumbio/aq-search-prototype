@@ -1,4 +1,4 @@
-# aq-search-prototype
+# Aquarium Sample Search Prototype
 Flask-based prototype for Aquarium search
 
 ## Requirements
