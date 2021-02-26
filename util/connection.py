@@ -9,3 +9,10 @@ def get_connection():
         database='production',
         cursorclass=pymysql.cursors.DictCursor
     )
+
+def fetch_sql(sql, connection=None):
+    print(sql + "\n")
+    connection = connection or get_connection()
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
+        return cursor.fetchall()

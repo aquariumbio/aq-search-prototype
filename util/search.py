@@ -1,12 +1,12 @@
-from util.connection import get_connection
+from util.connection import get_connection, fetch_sql
 
 
-def search_sequential(terms):
+def search_sequential(terms, fields=[]):
     results = []
     connection = get_connection()
     with connection:
         for term in terms:
-            results += select_samples(connection, term)
+            results += select_samples(connection, term, fields=fields)
     return results
 
 def all_samples(offset=0, limit=20):
@@ -18,24 +18,14 @@ def all_samples(offset=0, limit=20):
           "ON users.id = samples.user_id " \
           "ORDER BY samples.id LIMIT {}, {}".format(offset, limit)
 
-    connection = get_connection()
-    with connection.cursor() as cursor:
-        cursor.execute(sql)
-
-    print(sql + "\n")
-    return cursor.fetchall()
+    return fetch_sql(sql)
 
 def count_samples():
     sql = "SELECT COUNT(*) FROM samples"
 
-    connection = get_connection()
-    with connection.cursor() as cursor:
-        cursor.execute(sql)
+    return fetch_sql(sql)[0]['COUNT(*)']
 
-    print(sql + "\n")
-    return cursor.fetchone()['COUNT(*)']
-
-def select_samples(connection, term):
+def select_samples(connection, term, fields=[]):
     sql = "SELECT DISTINCT samples.*, sample_types.name, users.name " \
           "FROM samples " \
           "JOIN sample_types " \
@@ -46,29 +36,25 @@ def select_samples(connection, term):
           "ON field_values.parent_id = samples.id " \
           "WHERE field_values.parent_class = 'Sample' " \
           "AND CONCAT (" \
-          "sample_types.name, users.name, " \
-          "samples.name, samples.description, " \
-          "field_values.name, field_values.value" \
-          ") REGEXP '{}'".format(term)
+          "samples.name, samples.description"
 
-    with connection.cursor() as cursor:
-        cursor.execute(sql)
+    if "sample_type" in fields:
+        sql += ", sample_types.name"
+    if "owner" in fields:
+        sql += ", users.name"
+    if "properties" in fields:
+        sql += ", field_values.name, field_values.value"
 
-    print(sql + "\n")
-    return cursor.fetchall()
+    sql += ") REGEXP '{}'".format(term)
+
+    return fetch_sql(sql, connection)
 
 def all_sample_properties(sample_ids):
     sql = "SELECT * FROM field_values " \
           "WHERE parent_class = 'Sample' " \
           "AND parent_id IN ({})".format(",".join(sample_ids))
 
-    connection = get_connection()
-    with connection:
-        with connection.cursor() as cursor:
-            cursor.execute(sql)
-
-    print(sql + "\n")
-    return cursor.fetchall()
+    return fetch_sql(sql)
 
 def split(terms, sep=" "):
     return terms.split(sep)
