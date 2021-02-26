@@ -1,14 +1,47 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Search{% endblock %}</h1>
+  {% if debug %}
+    {{ debug }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="terms">Terms</label>
-    <input name="terms" id="terms">
-    <input type="submit" value="Search">
+    <div>
+      {% if request.form['method'] == 'and' %}
+        <input type="radio" id="and" name="method" value="and" checked>
+      {% else %}
+        <input type="radio" id="and" name="method" value="and">
+      {% endif %}
+      <label for="and">AND</label>
+    </div>
+    <div>
+      {% if request.form['method'] == 'or' %}
+        <input type="radio" id="or" name="method" value="or" checked>
+      {% else %}
+        <input type="radio" id="or" name="method" value="or">
+      {% endif %}
+      <label for="or">OR</label>
+    </div>
+
+    <div>
+      <input type="checkbox" id="properties" name="fields" value="properties">
+      <label for="properties">Properties</label>
+    </div>
+    <div>
+      <input type="checkbox" id="owner" name="fields" value="owner">
+      <label for="owner">Owner</label>
+    </div>
+    <div>
+      <input type="checkbox" id="sample_type" name="fields" value="sample_type">
+      <label for="sample_type">Sample Type</label>
+    </div>
+
+    <div>
+      <input name="terms" id="terms" value="{{ request.form['terms'] }}">
+      <input type="submit" value="Search">
+    </div>
   </form>
   <div class="list">{{ results|safe }}</div>
 {% endblock %}

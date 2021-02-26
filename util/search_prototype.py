@@ -1,9 +1,9 @@
 from util.search import split, search_sequential, all_sample_properties, all_samples, count_samples
 from util.display import display_list, display_no_results, order
 
-def search(terms, offset=0, limit=20, method='or'):
+def search(terms, offset=0, limit=20, method='or', fields=[]):
     terms = split(terms)
-    samples = search_sequential(terms)
+    samples = search_sequential(terms, fields=fields)
     samples = order(samples, method, n_terms=len(terms))
     n_total = len(samples)
     if samples:
