@@ -10,16 +10,10 @@ cache = redis.Redis(host='redis', port=6379)
 
 @app.route('/', methods=("GET", "POST"))
 def sample_search():
+    terms = request.form.get('terms') or ""
+    fields = request.form.getlist('fields') or []
+    method = request.form.get('method') or 'or'
     debug = None
-    terms = ""
-    fields = []
-    method = 'or'
-
-    if request.method == 'POST':
-        terms = request.form.get('terms')
-        fields = request.form.getlist('fields')
-        method = request.form.get('method')
-        # debug = method
 
     if terms:
         results = search(

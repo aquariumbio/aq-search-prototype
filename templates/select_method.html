@@ -1,16 +1,15 @@
-<div>
-    {% if request.form['method'] == 'and' %}
+{% if request.form['method'] == 'and' %}
+    <div>
         <input type="radio" id="and" name="method" value="and" checked>
-    {% else %}
-        <input type="radio" id="and" name="method" value="and">
-    {% endif %}
-    <label for="and">AND</label>
-</div>
-<div>
-    {% if request.form['method'] == 'or' %}
-        <input type="radio" id="or" name="method" value="or" checked>
-    {% else %}
+        <label for="and">AND</label>
         <input type="radio" id="or" name="method" value="or">
-    {% endif %}
-    <label for="or">OR</label>
-</div>
+        <label for="or">OR</label>
+    </div>
+{% else %}
+    <div>
+        <input type="radio" id="and" name="method" value="and">
+        <label for="and">AND</label>
+        <input type="radio" id="or" name="method" value="or" checked>
+        <label for="or">OR</label>
+    </div>
+{% endif %}
