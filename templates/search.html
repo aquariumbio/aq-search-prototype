@@ -8,15 +8,20 @@
 
 {% block content %}
   <form method="post">
-    <div>
-      {% include "select_method.html" %}
-      {% include "select_fields.html" %}
-    </div>
-    <div>
-      <div>
-        <input name="terms" id="terms" value="{{ request.form['terms'] }}">
-        <input type="submit" value="Search">
+    <div class="search-params">
+      <b>Search params</b>
+      <div class="select">
+        Method
+        {% include "select_method.html" %}
       </div>
+      <div class="select">
+        Fields
+        {% include "select_fields.html" %}
+      </div>
+    </div>
+    <div class="search-field">
+      {% include "search_terms.html" %}
+      <input type="submit" value="Search">
     </div>
   </form>
   <div class="list">{{ results|safe }}</div>
