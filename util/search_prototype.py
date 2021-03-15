@@ -9,7 +9,7 @@ def search(terms, offset=0, limit=20, method='or', fields=[]):
     if samples:
         properties = all_sample_properties([str(s["id"]) for s in samples])
         samples = samples[offset:limit]
-        return display_list(samples, properties, n_total, highlight=terms)
+        return display_list(samples, properties, n_total, highlight=terms, fields=fields)
     else:
         return display_no_results()
 

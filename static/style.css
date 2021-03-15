@@ -29,3 +29,5 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 input.danger { color: #cc2f2e; }
 #terms {  min-width: 30em }
 input[type=submit] { align-self: start; min-width: 5em; }
+.highlight { background-color: yellow; }
+.user-defined { color: green }
