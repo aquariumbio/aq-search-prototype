@@ -57,4 +57,4 @@ def all_sample_properties(sample_ids):
     return fetch_sql(sql)
 
 def split(terms, sep=" "):
-    return terms.split(sep)
+    return terms.strip().split(sep)
