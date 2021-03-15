@@ -25,14 +25,16 @@ def display_entry(sample, properties, highlight, fields):
     disp += display_property("Owner", owner_name)
 
     for p in properties:
+        name = p["name"]
+        if 'properties' in fields: name = highlight_by_regex(highlight, name)
+
         value = p["value"]
-        if value and 'properties' in fields:
+        if p["child_sample_id"]:
+            value = "Sample {}".format(p["child_sample_id"])
+        elif 'properties' in fields:
             value = highlight_by_regex(highlight, value)
 
-        elif p["child_sample_id"]:
-            value = "Sample {}".format(p["child_sample_id"])
-
-        disp += display_property(p["name"], value, True)
+        disp += display_property(name, value, True)
     return disp
 
 def display_property(name, value, user_defined=False):
