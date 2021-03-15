@@ -13,12 +13,9 @@ services:
     networks:
       - app-tier
 
-  redis:
-    image: "redis:alpine"
-
   mysql_db:
     image: mysql:5.7
-    environment:   # Set up mysql database name and password
+    environment:
       MYSQL_DATABASE: production
       MYSQL_USER: aquarium
       MYSQL_PASSWORD: aSecretAquarium
