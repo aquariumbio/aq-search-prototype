@@ -4,7 +4,7 @@
     {% else %}
         <input type="checkbox" id="properties" name="fields" value="properties">
     {% endif %}
-    <label for="properties">Properties</label>
+    <label for="properties">Properties (the fields that have green names)</label>
 </div>
 <div>
     {% if 'owner' in request.form.getlist('fields') %}

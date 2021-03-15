@@ -1,15 +1,19 @@
 {% if request.form['method'] == 'and' %}
     <div>
         <input type="radio" id="and" name="method" value="and" checked>
-        <label for="and">AND</label>
+        <label for="and">AND (has all of the search terms)</label>
+    </div>
+    <div>
         <input type="radio" id="or" name="method" value="or">
-        <label for="or">OR</label>
+        <label for="or">OR (has any of the search terms)</label>
     </div>
 {% else %}
     <div>
         <input type="radio" id="and" name="method" value="and">
-        <label for="and">AND</label>
+        <label for="and">AND (has all of the search terms)</label>
+    </div>
+    <div>
         <input type="radio" id="or" name="method" value="or" checked>
-        <label for="or">OR</label>
+        <label for="or">OR (has any of the search terms)</label>
     </div>
 {% endif %}
