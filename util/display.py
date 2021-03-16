@@ -1,7 +1,7 @@
 from collections import Counter
 import re
 
-def display_list(samples, properties, n_total, highlight=None, fields=[]):
+def display_list(samples, properties, n_total, highlight=[], fields=[]):
     highlight = regexp_from(highlight)
     text = []
     for sample in samples:
@@ -54,7 +54,10 @@ def regexp_from(terms, oper='|'):
     return re.compile(oper.join(terms), flags=re.IGNORECASE)
 
 def highlight_by_regex(regex, txt):
-    return re.subn(regex, highlight_match, txt)[0]
+    if regex and txt:
+        return re.subn(regex, highlight_match, txt)[0]
+    else:
+        return txt
 
 def highlight_match(matchobj):
     return highlight(matchobj.group(0))
