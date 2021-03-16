@@ -11,7 +11,7 @@ This library is designed to be run in Docker
 Clone using [git](https://git-scm.com/) with the command
 
 ```bash
-git clone git@github.com:aquariumbio/aq-search-prototype.git
+git clone https://github.com/aquariumbio/aq-search-prototype.git
 cd aq-search-prototype
 ```
 
