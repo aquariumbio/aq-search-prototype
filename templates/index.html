@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Aquarium Prototype{% endblock %}
+{% block header %}
+  <h1>Contents</h1>
+  {% if debug %}
+    {{ debug }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div>
+    <p><a href="/samples/search">Search Samples</a></p>
+    <p><a href="/data/browser">Data Browser</a></p>
+  </div>
+{% endblock %}

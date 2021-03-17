@@ -1,6 +1,5 @@
 from util.connection import get_connection, fetch_sql
 
-
 def search_sequential(terms, fields=[]):
     results = []
     connection = get_connection()
@@ -55,6 +54,3 @@ def all_sample_properties(sample_ids):
           "AND parent_id IN ({})".format(",".join(sample_ids))
 
     return fetch_sql(sql)
-
-def split(terms, sep=" "):
-    return terms.strip().split(sep)
