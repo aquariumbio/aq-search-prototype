@@ -3,6 +3,7 @@ import time
 from flask import Flask, render_template, request
 
 from util.sample_search import search_samples, list_samples
+from util.data_browser import test_dataframe
 
 app = Flask(__name__)
 
@@ -12,7 +13,9 @@ def index():
 
 @app.route('/data/browser', methods=("GET", "POST"))
 def data_browser():
-    return render_template('data/browser.html')
+    df = test_dataframe()
+    return render_template('data/browser.html',
+                           tables=[df.to_html(classes='data')])
 
 @app.route('/samples/search', methods=("GET", "POST"))
 def sample_search():

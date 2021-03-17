@@ -9,6 +9,8 @@
 
 {% block content %}
   <div>
-    <p>Data Browser Goes Here</p>
+    {% for table in tables %}
+      {{ table|safe }}
+    {% endfor %}
   </div>
 {% endblock %}
