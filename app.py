@@ -1,9 +1,9 @@
-import time
+from time import perf_counter
 
 from flask import Flask, render_template, request
 
 from util.sample_search import search_samples, list_samples
-from util.data_browser import test_dataframe
+from util.data_browser import dataframe_for
 
 app = Flask(__name__)
 
@@ -13,9 +13,20 @@ def index():
 
 @app.route('/data/browser', methods=("GET", "POST"))
 def data_browser():
-    df = test_dataframe()
+    item_id = request.form.get('item') or None
+    tables = []
+    debug = None
+
+    if item_id:
+
+        df = dataframe_for(item_id = item_id)
+        # tables=[df.to_html(classes='data')]
+
+        tables = [df]
+
     return render_template('data/browser.html',
-                           tables=[df.to_html(classes='data')])
+                           tables=tables,
+                           debug=debug)
 
 @app.route('/samples/search', methods=("GET", "POST"))
 def sample_search():
