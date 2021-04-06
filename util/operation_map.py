@@ -31,23 +31,23 @@ class OperationMap():
         return find_by_id("operation_type", self.__operation["operation_type_id"])
 
     def all_keys(self):
-        return sorted(list(set(flatten([
-            input_samples.keys(),
-            input_parameters.keys(),
-            input_data.keys(),
-            output_samples.keys(),
-            output_data.keys(),
-            operation_data.keys()
-        ]))))
+        return sorted(list(set(
+            list(self.input_samples().keys()) +
+            list(self.input_parameters().keys()) +
+            list(self.input_data().keys()) +
+            list(self.output_samples().keys()) +
+            list(self.output_data().keys()) +
+            list(self.operation_data().keys())
+        )))
 
     def fetch_data(self, key):
-        data = flatten([
-            input_samples[key],
-            input_parameters[key],
-            input_data[key],
-            output_samples[key],
-            output_data[key],
-            operation_data[key]
+        data = OperationMap.flatten([
+            self.input_samples()[key],
+            self.input_parameters()[key],
+            self.input_data()[key],
+            self.output_samples()[key],
+            self.output_data()[key],
+            self.operation_data()[key]
         ])
         return [d for d in data if d]
 
@@ -160,10 +160,10 @@ class OperationMap():
     def key_pattern(cls):
         return re.compile(r"[a-z0-9?_]+")
 
-    @staticmethod
-    def flatten(list_of_lists):
+    @classmethod
+    def flatten(cls, list_of_lists):
         if len(list_of_lists) == 0:
             return list_of_lists
         if isinstance(list_of_lists[0], list):
-            return flatten(list_of_lists[0]) + flatten(list_of_lists[1:])
-        return list_of_lists[:1] + flatten(list_of_lists[1:])
+            return OperationMap.flatten(list_of_lists[0]) + OperationMap.flatten(list_of_lists[1:])
+        return list_of_lists[:1] + OperationMap.flatten(list_of_lists[1:])

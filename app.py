@@ -4,7 +4,7 @@ from json import dumps
 from flask import Flask, render_template, request
 
 from util.sample_search import search_samples, list_samples
-from util.data_browser import dataframe_for
+from util.data_browser import dataframes_for
 
 app = Flask(__name__)
 
@@ -17,15 +17,15 @@ def data_browser():
     item_id = request.form.get('item') or None
     tables = []
     debug = None
-    df = None
+    dfs = None
 
     if item_id:
 
-        df = dataframe_for(item_id = item_id)
-        df = dumps(df, sort_keys=True, indent=2)
+        dfs = dataframes_for(item_id = item_id)
+        dfs = dumps(dfs, sort_keys=True, indent=2)
         # tables=[df.to_html(classes='data')]
 
-        tables = [df]
+        tables = [dfs]
 
     return render_template('data/browser.html',
                            tables=tables,

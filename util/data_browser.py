@@ -2,7 +2,7 @@ import pandas as pd
 from util.data_queries import data_for_item
 from util.operation_map import OperationMap
 
-def dataframe_for(item_id = None):
+def dataframes_for(item_id = None):
     jobs = data_for_item(item_id = item_id)
     reports = []
     for job in jobs:
@@ -29,4 +29,5 @@ def report_for(operation):
     report["input_data"] = om.input_data()
     report["output_data"] = om.output_data()
     report["operation_data"] = om.operation_data()
+    report["all_keys"] = om.all_keys()
     return report
