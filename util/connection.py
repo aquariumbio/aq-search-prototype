@@ -12,7 +12,15 @@ def get_connection():
 
 def fetch_sql(sql, connection=None):
     print(sql + "\n")
-    connection = connection or get_connection()
+    data = None
+    close = False
+    if connection is None:
+        connection =  get_connection()
+        close = True
+
     with connection.cursor() as cursor:
         cursor.execute(sql)
-        return cursor.fetchall()
+        data = cursor.fetchall()
+
+    if close: connection.close()
+    return data
