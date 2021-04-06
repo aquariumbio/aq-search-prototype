@@ -1,4 +1,5 @@
 from time import perf_counter
+from json import dumps
 
 from flask import Flask, render_template, request
 
@@ -16,10 +17,12 @@ def data_browser():
     item_id = request.form.get('item') or None
     tables = []
     debug = None
+    df = None
 
     if item_id:
 
         df = dataframe_for(item_id = item_id)
+        df = dumps(df, sort_keys=True, indent=2)
         # tables=[df.to_html(classes='data')]
 
         tables = [df]

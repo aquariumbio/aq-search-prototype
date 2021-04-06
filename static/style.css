@@ -137,6 +137,11 @@ input.danger {
 	color: #067e02
 }
 
+.dataframes {
+	white-space: pre-wrap;
+	font-family:'Lucida Console', monospace;
+}
+
 table.dataframe, .dataframe th, .dataframe td {
   border: none;
   border-bottom: 1px solid #C8C8C8;
