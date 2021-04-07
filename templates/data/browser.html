@@ -16,9 +16,10 @@
       <input type="submit" value="Search">
     </div>
   </form>
-  <div class="dataframes">
+  <div>
     {% for table in tables %}
-      {{ table|safe }}
+      <h2>Job&nbsp;{{table["job_id"]}}:&nbsp;{{table["operation_name"]}}</h2>
+      {{ table["dataframe"].to_html(classes='data')|safe }}
     {% endfor %}
   </div>
 {% endblock %}
