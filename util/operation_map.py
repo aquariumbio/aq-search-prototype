@@ -42,12 +42,12 @@ class OperationMap():
 
     def fetch_data(self, key):
         data = OperationMap.flatten([
-            self.input_samples()[key],
-            self.input_parameters()[key],
-            self.input_data()[key],
-            self.output_samples()[key],
-            self.output_data()[key],
-            self.operation_data()[key]
+            self.input_samples().get(key),
+            self.input_parameters().get(key),
+            self.input_data().get(key),
+            self.output_samples().get(key),
+            self.output_data().get(key),
+            self.operation_data().get(key)
         ])
         return [d for d in data if d]
 
