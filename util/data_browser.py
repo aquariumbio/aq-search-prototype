@@ -7,9 +7,10 @@ def reports_for(item_id = None):
     jobs = data_for_item(item_id = item_id)
     reports = []
     for job in jobs:
-        operation_reports = []
-        for operation in job["operations"]:
-            operation_reports.append(report_for(operation))
+        operation_data = [data_for(op) for op in job["operations"]]
+        columns = columns_for(operation_data)
+        data = [r.pop("data", {}) for r in operation_data]
+        dataframe = pd.DataFrame(columns = columns, data = data)
 
         operation_name = operation_reports[0].get("operation_name")
 
@@ -22,14 +23,20 @@ def reports_for(item_id = None):
 
         reports.append({
             "job_id": job["id"],
-            "operation_name": operation_name,
-            "operations": operation_reports,
+            "operation_name": operation_data[0].get("operation_name"),
             "dataframe": dataframe
         })
 
     return reports
 
-def report_for(operation):
+def columns_for(operation_data):
+    columns = [r.get("data_keys", []) for r in operation_data]
+    columns = reduce(lambda x, y: x+y, columns)
+    columns = sorted(list(set(columns)))
+    columns = ["operation_id", "output_items"] + columns
+    return columns
+
+def data_for(operation):
     om = OperationMap(operation)
     report = {}
     report["data_keys"] = om.all_keys()

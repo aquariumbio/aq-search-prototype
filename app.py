@@ -16,14 +16,14 @@ def index():
 def data_browser():
     item_id = request.form.get('item') or None
     debug = None
-    tables = None
+    dataframes = None
 
     if item_id:
-        tables = reports_for(item_id = item_id)
-        # tables = dumps(tables, sort_keys=True, indent=2)
+        dataframes = dataframes_for(item_id = item_id)
+        # dataframes = dumps(dataframes, sort_keys=True, indent=2)
 
     return render_template('data/browser.html',
-                           tables=tables,
+                           dataframes=dataframes,
                            debug=debug)
 
 @app.route('/samples/search', methods=("GET", "POST"))
