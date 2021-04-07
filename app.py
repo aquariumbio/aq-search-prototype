@@ -15,20 +15,15 @@ def index():
 @app.route('/data/browser', methods=("GET", "POST"))
 def data_browser():
     item_id = request.form.get('item') or None
-    tables = []
     debug = None
-    dfs = None
+    dataframes = None
 
     if item_id:
-
-        dfs = dataframes_for(item_id = item_id)
-        dfs = dumps(dfs, sort_keys=True, indent=2)
-        # tables=[df.to_html(classes='data')]
-
-        tables = [dfs]
+        dataframes = dataframes_for(item_id = item_id)
+        # dataframes = dumps(dataframes, sort_keys=True, indent=2)
 
     return render_template('data/browser.html',
-                           tables=tables,
+                           dataframes=dataframes,
                            debug=debug)
 
 @app.route('/samples/search', methods=("GET", "POST"))
