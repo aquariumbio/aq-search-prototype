@@ -1,4 +1,6 @@
 import json
+from typing import Dict, List
+from util.types import FieldValue
 from util.connection import get_connection, fetch_sql
 
 def data_for_item(item_id = None):
@@ -45,7 +47,7 @@ def find_by_id(model, id):
     results = fetch_sql(sql)
     if results: return results[0]
 
-def io_for(operation_id):
+def io_for(operation_id: int) -> List[FieldValue]:
     sql = "SELECT field_values.* FROM field_values " \
           "WHERE parent_class = 'Operation' " \
           "AND parent_id = '{operation_id}'".format(operation_id = operation_id)
