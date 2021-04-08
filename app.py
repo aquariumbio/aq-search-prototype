@@ -1,6 +1,3 @@
-from time import perf_counter
-from json import dumps
-
 from flask import Flask, render_template, request
 
 from util.sample_search import search_samples, list_samples
@@ -20,7 +17,6 @@ def data_browser():
 
     if item_id:
         dataframes = dataframes_for(item_id = item_id)
-        # dataframes = dumps(dataframes, sort_keys=True, indent=2)
 
     return render_template('data/browser.html',
                            dataframes=dataframes,
