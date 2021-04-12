@@ -13,7 +13,7 @@ def index():
 def data_browser():
     item_id = request.form.get('item') or None
     debug = None
-    dataframes = None
+    dataframes = []
 
     if item_id:
         dataframes = dataframes_for(item_id = item_id)
