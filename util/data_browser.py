@@ -12,15 +12,6 @@ def reports_for(item_id = None):
         data = [r.pop("data", {}) for r in operation_data]
         dataframe = pd.DataFrame(columns = columns, data = data)
 
-        operation_name = operation_reports[0].get("operation_name")
-
-        columns = [r.pop("data_keys", []) for r in operation_reports]
-        columns = reduce(lambda x, y: x+y, columns)
-        columns = sorted(list(set(columns)))
-        columns = ["operation_id", "output_items"] + columns
-        data = [r.pop("data", {}) for r in operation_reports]
-        dataframe = pd.DataFrame(columns = columns, data = data)
-
         reports.append({
             "job_id": job["id"],
             "operation_name": operation_data[0].get("operation_name"),

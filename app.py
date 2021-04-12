@@ -13,13 +13,13 @@ def index():
 def data_browser():
     item_id = request.form.get('item') or None
     debug = None
-    dataframes = []
+    reports = []
 
     if item_id:
-        dataframes = dataframes_for(item_id = item_id)
+        reports = reports_for(item_id = item_id)
 
     return render_template('data/browser.html',
-                           dataframes=dataframes,
+                           reports=reports,
                            debug=debug)
 
 @app.route('/samples/search', methods=("GET", "POST"))

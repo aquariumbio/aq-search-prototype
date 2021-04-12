@@ -17,9 +17,9 @@
     </div>
   </form>
   <div>
-    {% for dataframe in dataframes %}
-      <h2>Job&nbsp;{{dataframe["job_id"]}}:&nbsp;{{dataframe["operation_name"]}}</h2>
-      {{ dataframe["dataframe"].to_html(classes='data')|safe }}
+    {% for report in reports %}
+      <h2>Job&nbsp;{{report["job_id"]}}:&nbsp;{{report["operation_name"]}}</h2>
+      {{ report["dataframe"].to_html(classes='data')|safe }}
     {% endfor %}
   </div>
 {% endblock %}
