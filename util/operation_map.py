@@ -133,7 +133,7 @@ class OperationMap():
     def collect_samples(self, field_values: List[FieldValue]) -> Dict[str, List[str]]:
         samples: Dict[str, List[str]] = {}
         for fv in field_values:
-            if not fv["child_sample_id"]: next
+            if not isinstance(fv["child_sample_id"], int): continue
 
             sample = find_by_id('sample', fv["child_sample_id"])
             self.add_data(samples, fv["name"], sample["name"])
@@ -142,7 +142,7 @@ class OperationMap():
     def collect_parameters(self, field_values: List[FieldValue]) -> Dict[str, list]:
         parameters: Dict[str, list] = {}
         for fv in field_values:
-            if not fv["value"]: next
+            if not fv["value"]: continue
 
             if isinstance(fv["value"], dict):
                 params = fv["value"]
@@ -156,7 +156,7 @@ class OperationMap():
     def item_data(self, field_values: List[FieldValue]) -> Dict[str, list]:
         data: Dict[str, list] = {}
         for fv in field_values:
-            if not fv["child_item_id"]: next
+            if not isinstance(fv["child_item_id"], int): continue
 
             self.add_associations(data, "Item", fv["child_item_id"])
         return data
